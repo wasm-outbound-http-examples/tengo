@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTTP request for TengoHTTP</title>
+    <script type="text/javascript" src="wasm_exec.js"></script>
+</head>
+<body>
+<h2>HTTP Request from inside WASM using Tengo and its TengoHTTP package</h2>
+
+<p>This example uses <a href="https://github.com/damiva/TengoHTTP">TengoHTTP</a> package.</p>
+<p>See the output in browser developer console.</p>
+
+<p>Actual code:</p>
+<pre>
+
+fmt := import("fmt")
+http := import("httpclient")
+
+resp := http.request("https://httpbin.org/anything", "GET")
+fmt.print(is_error(resp) ? resp : resp.body)
+
+</pre>
+<script type="text/javascript">
+    const go = new Go();
+    WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject).then((result) => {
+        go.run(result.instance);
+    });
+</script>
+<footer><small>Created for (wannabe-awesome) <a href="https://github.com/vasilev/HTTP-request-from-inside-WASM">list</a></small></footer>
+</body>
+</html>
